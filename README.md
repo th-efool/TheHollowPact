@@ -30,7 +30,8 @@ _Note: Multiplayer mode is still buggy with few errors so i have disabled it, bu
 ---
 
 ## 1. Multiplayer Architecture
-[View Architecture Diagram](https://htmlpreview.github.io/?https://github.com/th-efool/TheHollowPact/blob/7e145853a341b30a895a63d12385f02103dd1bb3/docs/Architecture.html)
+[📕View Architecture Diagram](https://htmlpreview.github.io/?https://github.com/th-efool/TheHollowPact/blob/7e145853a341b30a895a63d12385f02103dd1bb3/docs/Architecture.html)
+
 ![Network Architecture Diagram 1](https://github.com/th-efool/TheHollowPact/blob/main/docs/screenshot20250527195357.png?raw=true)
 
 ## Core Framework Components
