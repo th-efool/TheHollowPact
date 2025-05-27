@@ -31,10 +31,6 @@ _Note: Multiplayer mode is still buggy with few errors so i have disabled it, bu
 
 ## 1. Multiplayer Architecture
 
-[HTML Open Architecture Diagram](https://htmlpreview.github.io/?https://raw.githubusercontent.com/th-efool/TheHollowPact/refs/heads/main/docs/Architecture.html)
-
-![Network Architecture Diagram 1](https://github.com/th-efool/TheHollowPact/blob/main/docs/screenshot20250527195357.png?raw=true)
-
 ## Core Framework Components
 
 | Class | Responsibility | Notes |
@@ -46,6 +42,11 @@ _Note: Multiplayer mode is still buggy with few errors so i have disabled it, bu
 | **APawn / ACharacter** | The controllable actor (body) in the world | Possessed by PlayerController |
 | **AHUD** | Basic on-screen UI manager (legacy) | Generally replaced by UMG in modern projects |
 | **UUserWidget** | UI elements created via Unreal Motion Graphics (UMG) | For health bars, ammo, HUDs, menus |
+
+[HTML Open Architecture Diagram](https://htmlpreview.github.io/?https://raw.githubusercontent.com/th-efool/TheHollowPact/refs/heads/main/docs/Architecture.html)
+
+![Network Architecture Diagram 1](https://github.com/th-efool/TheHollowPact/blob/main/docs/screenshot20250527195357.png?raw=true)
+
 
 # Unreal Engine Multiplayer Framework (diagram for reference & context)  (diagram source: UnrealForums)
 ![Network Architecture Diagram 2](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527144745.png?raw=true)
