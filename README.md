@@ -6,8 +6,17 @@
 **Perspective:** `Over-the-shoulder third person`  
 **Target Platform:** `PC (with scalability for Console)`
 
-_Note: Multiplayer mode is still buggy with few errors so it's disabled code, but the entire code is still full network replicated_
----
+To Play the Game Directly, you can download and run the executable from below: 
+[🎮Game.exe](https://drive.google.com/file/d/1P3dZV_-bjo79fWiBQgCWrdzBUfkiG-GI/view?usp=sharing)
+
+To look at the Source Code,
+1. clone the repositry
+2. download 3dAssets.zip & paste it's content into the content folder of the cloned repo
+3. and open it Unreal Engine 5.5+.
+4. [Resources.Zip](https://drive.google.com/file/d/19foQoygG6yyGKS8EOkeQvUnY1uCCmEB8/view?usp=sharing)
+
+
+_Note: Multiplayer mode is still buggy with few errors so i have disabled it, but the entire code is still fully network replicated_
 
 ## Table of Contents
 1. [Multiplayer Architecture](#1-multiplayer-architecture)
