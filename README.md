@@ -328,7 +328,7 @@ This architecture ensures deterministic gameplay while minimizing network overhe
 
 ---
 
-## 2. 🦾 Character System
+## 2. Character System
 
 ### Complex Locomotion System
 
@@ -340,32 +340,32 @@ This architecture ensures deterministic gameplay while minimizing network overhe
 
 Our character system features multiple states with seamless transitions:
 
-#### 🏃 Movement States
+#### Movement States
 - **UnArmed State**
   - UnArmed Normal
   - UnArmed Crouch
   - UnArmed Jump
   - UnArmed Run
 
-- **🏹 Bow State**
+- **Bow State**
   - Bow Normal
   - Bow Crouch
   - Bow Jump
   - Bow Running
 
-- **🔫 Rifle State**
+- **Rifle State**
   - Rifle Normal
   - Rifle Crouch
   - Rifle Jump
   - Rifle Running
 
-- **⚔️ Sword State**
-- **😴 Idle State**
-- **💀 Death State**
+- **Sword State**
+- **Idle State**
+- **Death State**
 
 > The PawnBlueprint holds the variables that are used to set values in the AnimationBlueprint attached to the SkeletalMesh Component.
 
-### 👁️ Head Gaze Tracking
+### Head Gaze Tracking
 
 <div align="center">
 
@@ -381,22 +381,22 @@ We dynamically adjust the **rotation value** of neck and upper spines of our cha
 
 </div>
 
-### 🚶 Dynamic Movements (Footsteps, Turning)
+### Dynamic Movements (Footsteps, Turning)
 
 We have implemented dynamic blending between movements in different directions to give a more realistic feel.
 
 ---
 
-## 3. ⚔️ Weapons & Combat
+## 3. Weapons & Combat
 
 ### Core Combat Features
-- **🎥 Combat Camera** - Dynamic camera system for combat scenarios
-- **🔫 Weapon Systems**
+- **Combat Camera** - Dynamic camera system for combat scenarios
+- **Weapon Systems**
   - Equip/Unequip mechanics
   - Weapon swapping system
-- **🤝 Interaction System**
+- **Interaction System**
   - Weapon/Ammo/Grenade pickup and drop
-- **💥 Shooting System**
+- **Shooting System**
   - AmmoInventory management
   - Reload mechanics
   - Server-side firing validation
@@ -406,7 +406,7 @@ We have implemented dynamic blending between movements in different directions t
 
 ---
 
-## 4. 🤖 AI Systems
+## 4. AI Systems
 
 <div align="center">
 
@@ -414,7 +414,7 @@ We have implemented dynamic blending between movements in different directions t
 
 </div>
 
-### 🐉 Dragon AI Logic
+### Dragon AI Logic
 
 ```mermaid
 flowchart TD
@@ -447,7 +447,7 @@ flowchart TD
     L -->|Fight| J
 ```
 
-### 🎭 Animation System
+### Animation System
 
 <div align="center">
 
@@ -455,7 +455,7 @@ flowchart TD
 
 </div>
 
-### 🐺 Creature Collection
+### Creature Collection
 - **Barghest** - Mythical hound creature
 - **Centaur** - Half-human, half-horse warrior
 - **Kraken** - Sea monster with tentacle attacks
@@ -467,7 +467,7 @@ flowchart TD
 
 </div>
 
-### 🐙 Kraken System
+### Kraken System
 
 <div align="center">
 
@@ -475,7 +475,7 @@ flowchart TD
 
 </div>
 
-### ⚔️ SwordsMaster AI
+### SwordsMaster AI
 
 <div align="center">
 
@@ -500,7 +500,7 @@ graph LR
 
 ---
 
-## 5. 🖼️ User Interface (HUD)
+## 5. User Interface (HUD)
 
 <div align="center">
 
@@ -510,7 +510,7 @@ graph LR
 
 </div>
 
-### 🧭 Compass System
+### Compass System
 For the compass HUD, we use a texture that loops and rolls over to create the compass effect. The position & offset on the texture is changed through the controller class.
 
 <div align="center">
@@ -519,20 +519,20 @@ For the compass HUD, we use a texture that loops and rolls over to create the co
 
 </div>
 
-### 🗺️ MiniMap System
+### MiniMap System
 We implemented two modes:
 
 1. **Camera Mode (Active)** - Camera held above the player's head, output passed through color grading filter (rendered at low resolution for performance)
 2. **Texture Mode** - Track character location and map it onto premade level texture
 
-### 📢 MessageBox System
+### MessageBox System
 The `showMessageBox()` function can be called through the `PlayerController`.
 
-### 📊 Status Displays
+### Status Displays
 - **Weapon/Health/Ammo/Grenade** - Values stored within the pawn, HUD updates on value changes
 - **ClipAmmo & InventoryAmmo** - Changes based on currently equipped weapon
 
-### 🎯 HitMarker System
+### HitMarker System
 When players land successful hits, red hitmarkers appear to provide visual feedback.
 
 <div align="center">
@@ -543,7 +543,7 @@ When players land successful hits, red hitmarkers appear to provide visual feedb
 
 ---
 
-## 6. 🔊 Visuals & Audio System
+## 6. Visuals & Audio System
 
 ### 🌍 Ambient Audio Objects
 Special actors that trigger when players enter a certain radius, responsible for playing background ambient noise.
@@ -627,7 +627,7 @@ flowchart TD
     E --> AA[Remove from Pipeline]
 ```
 
-### 🦶 Dynamic Audio Effects
+### Dynamic Audio Effects
 **Footsteps, Roars, Growls, Screams** and other audio effects are mostly baked into the animations themselves.
 
 > **Note:** For gun-impact/hit sounds, we check material tags to play different sounds. We also have a mechanism for footsteps that changes sounds according to ground type, but it's currently disabled due to lack of quality walking sound assets.
@@ -636,13 +636,13 @@ flowchart TD
 
 ---
 
-## 7. 🎯 Prop Hunt Game Mode
+## 7. Prop Hunt Game Mode
 
 A fun multiplayer game mode where one player is randomly selected as a prop who must hide from the other players (hunters) within a time limit.
 
-### 🎭 Prop Player Abilities
+### Prop Player Abilities
 
-#### 1. 🔄 Transformation System
+#### 1. Transformation System
 Ability to transform into any model the prop player is contacting.
 
 <div align="center">
@@ -651,7 +651,7 @@ Ability to transform into any model the prop player is contacting.
 
 </div>
 
-#### 2. 🪞 Decoy System  
+#### 2. Decoy System  
 The PropPlayer can create copies of itself to confuse, bait, and lure enemies.
 
 <div align="center">
