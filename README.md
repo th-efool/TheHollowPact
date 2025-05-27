@@ -11,9 +11,9 @@ To Play the Game Directly, you can run the executable from here:
 
 To look at the Source Code,
 1. clone the repositry
-2. download 3dAssets.zip & paste it's content into the content folder of the cloned repo
-3. and open it Unreal Engine 5.5+.
-4. [Resources.Zip](https://drive.google.com/file/d/19foQoygG6yyGKS8EOkeQvUnY1uCCmEB8/view?usp=sharing)
+2. download [Resources.Zip](https://drive.google.com/file/d/19foQoygG6yyGKS8EOkeQvUnY1uCCmEB8/view?usp=sharing) & paste it's contents inside the **hollow_pact/content** folder of the cloned repositry
+3. Open it Unreal Engine 5.5.4.
+
 
 
 _Note: Multiplayer mode is still buggy with few errors so i have disabled it, but the entire code is still fully network replicated_
