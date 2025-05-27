@@ -39,7 +39,7 @@
 
 ![Network Architecture Diagram 2](IMAGE_URL_HERE)
 
-![Network Architecture Diagram 3](IMAGE_URL_HERE)
+![Network Architecture Diagram 3](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527144749.png?raw=true)
 
 </div>
 
@@ -51,7 +51,7 @@
 
 <div align="center">
 
-![Character Locomotion System](IMAGE_URL_HERE)
+![Character Locomotion System](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527144925.png?raw=true)
 
 </div>
 
@@ -94,7 +94,7 @@ We dynamically adjust the **rotation value** of neck and upper spines of our cha
 
 <div align="center">
 
-![Head Gaze System Diagram](IMAGE_URL_HERE)
+![Head Gaze System Diagram](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527144956.png?raw=true)
 
 </div>
 
@@ -127,7 +127,7 @@ We have implemented dynamic blending between movements in different directions t
 
 <div align="center">
 
-![AI Systems Overview](IMAGE_URL_HERE)
+![AI Systems Overview](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527165943.png?raw=true)
 
 </div>
 
@@ -168,7 +168,7 @@ flowchart TD
 
 <div align="center">
 
-![AI Animation System](IMAGE_URL_HERE)
+![AI Animation System](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527165609.png?raw=true)
 
 </div>
 
@@ -180,7 +180,7 @@ flowchart TD
 
 <div align="center">
 
-![Creature Collection](IMAGE_URL_HERE)
+![Creature Collection](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527170018.png?raw=true)
 
 </div>
 
@@ -188,7 +188,7 @@ flowchart TD
 
 <div align="center">
 
-![Kraken AI System](IMAGE_URL_HERE)
+![Kraken AI System](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527165725.png?raw=true)
 
 </div>
 
