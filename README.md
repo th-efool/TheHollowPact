@@ -154,7 +154,7 @@ Whenever player manages to land an successive hit, red hitmarker gets cropped up
  Special actors, that get triggered when actor enters within certain radius. Responsible for playing background ambient noise
 `Content/SoundAmbience/Apocalypse`
 
-==**Spatial Audio Attenuation System**==
+**Spatial Audio Attenuation System**
 **Core Features:** 
 • Distance-based volume attenuation (linear/logarithmic curves) 
 • Configurable min/max distance thresholds (400-4000 units) 
