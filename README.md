@@ -1,4 +1,4 @@
-# 🎮 TheHollowPact
+# TheHollowPact
 
 **Engine:** `Unreal Engine 5.5.4`  
 **Mode:** `Multiplayer (Listen Server)`  
@@ -6,22 +6,20 @@
 **Perspective:** `Over-the-shoulder third person`  
 **Target Platform:** `PC (with scalability for Console)`
 
-> A competitive and cooperative multiplayer third-person shooter with RPG styled, modern UI, responsive controls, and high replayability.
+---
+
+## Table of Contents
+1. [Multiplayer Architecture](#1-multiplayer-architecture)
+2. [Character System](#2-character-system)
+3. [Weapons & Combat](#3-weapons--combat)
+4. [AI Systems](#4-ai-systems)
+5. [User Interface (HUD)](#5-user-interface-hud)
+6. [Audio System](#6-audio-system)
+7. [Prop Hunt Game Mode](#7-prop-hunt-game-mode)
 
 ---
 
-## 📋 Table of Contents
-1. [🏗️ Multiplayer Architecture](#1-multiplayer-architecture)
-2. [🦾 Character System](#2-character-system)
-3. [⚔️ Weapons & Combat](#3-weapons--combat)
-4. [🤖 AI Systems](#4-ai-systems)
-5. [🖼️ User Interface (HUD)](#5-user-interface-hud)
-6. [🔊 Audio System](#6-audio-system)
-7. [🎯 Prop Hunt Game Mode](#7-prop-hunt-game-mode)
-
----
-
-## 1. 🏗️ Multiplayer Architecture
+## 1. Multiplayer Architecture
 
 | Class | Responsibility | Notes |
 |-------|---------------|-------|
@@ -37,7 +35,7 @@
 
 <div align="center">
 
-![Network Architecture Diagram 1](IMAGE_URL_HERE)
+![Network Architecture Diagram 1](https://github.com/th-efool/TheHollowPact/blob/main/docs/screenshot20250527195357.png?raw=true)
 
 ![Network Architecture Diagram 2](IMAGE_URL_HERE)
 
@@ -198,7 +196,7 @@ flowchart TD
 
 <div align="center">
 
-![SwordsMaster Combat](IMAGE_URL_HERE)
+![SwordsMaster Combat](https://github.com/th-efool/TheHollowPact/blob/main/docs/UnrealEditor_rJ8zmcuKa9.gif?raw=true)
 
 </div>
 
@@ -364,7 +362,7 @@ Ability to transform into any model the prop player is contacting.
 
 <div align="center">
 
-![Prop Transformation System](IMAGE_URL_HERE)
+![Prop Transformation System](https://github.com/th-efool/TheHollowPact/blob/main/docs/UnrealEditor_ScrIA6gnMz.gif?raw=true)
 
 </div>
 
@@ -373,7 +371,7 @@ The PropPlayer can create copies of itself to confuse, bait, and lure enemies.
 
 <div align="center">
 
-![Prop Decoy System](IMAGE_URL_HERE)
+![Prop Decoy System](https://github.com/th-efool/TheHollowPact/blob/main/docs/comp%20(2).gif?raw=true)
 
 </div>
 
