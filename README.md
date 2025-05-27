@@ -1,81 +1,141 @@
-**Project Name:** TheHollowPact  
-**Engine:** Unreal Engine 5.5.4 
-**Mode:** Multiplayer (Listen Server)
-**Genre:** Third-Person Shooter RPG  
-**Perspective:** Over-the-shoulder third person  
-**Target Platform:** PC (with scalability for Console)
+# 🎮 TheHollowPact
 
-A competitive and cooperative multiplayer third-person shooter with RPG styled, modern UI, responsive controls, and high replayability.
+**Engine:** `Unreal Engine 5.5.4`  
+**Mode:** `Multiplayer (Listen Server)`  
+**Genre:** `Third-Person Shooter RPG`  
+**Perspective:** `Over-the-shoulder third person`  
+**Target Platform:** `PC (with scalability for Console)`
 
-## Table of Contents
-1. [Character System](#1-character-system)
-2. [Multiplayer Architecture](#2-multiplayer-architecture)
-3. [Weapons & Combat](#weapons--combat)
-4. AIs
-5. [User Interface (HUD)](#user-interface-hud)
-6. [Audio](#audio)
-7. Prop Hunt Game Mode
+> A competitive and cooperative multiplayer third-person shooter with RPG styled, modern UI, responsive controls, and high replayability.
 
+---
 
-## 1. Multiplayer Architecture
-| Class                           | Responsibility                                                       | Notes                                        |
-| ------------------------------- | -------------------------------------------------------------------- | -------------------------------------------- |
-| **AGameModeBase / AGameMode**   | Defines game rules and win/loss conditions (server-only)             | Only exists on the server                    |
-| **AGameStateBase / AGameState** | Tracks match state, time, score (server + replicated to all clients) | Syncs global data to clients                 |
-| **APlayerController**           | Represents the player's input and client control logic               | First class a player "owns"                  |
-| **APlayerState**                | Holds player-related data (name, score, team, etc.)                  | Exists on server and all clients             |
-| **APawn / ACharacter**          | The controllable actor (body) in the world                           | Possessed by PlayerController                |
-| **AHUD**                        | Basic on-screen UI manager (legacy)                                  | Generally replaced by UMG in modern projects |
-| **UUserWidget**                 | UI elements created via Unreal Motion Graphics (UMG)                 | For health bars, ammo, HUDs, menus           |
-![[Pasted image 20250527144035.png]]![[Pasted image 20250527144745.png]]![[Pasted image 20250527144749.png]]
+## 📋 Table of Contents
+1. [🏗️ Multiplayer Architecture](#1-multiplayer-architecture)
+2. [🦾 Character System](#2-character-system)
+3. [⚔️ Weapons & Combat](#3-weapons--combat)
+4. [🤖 AI Systems](#4-ai-systems)
+5. [🖼️ User Interface (HUD)](#5-user-interface-hud)
+6. [🔊 Audio System](#6-audio-system)
+7. [🎯 Prop Hunt Game Mode](#7-prop-hunt-game-mode)
 
+---
 
+## 1. 🏗️ Multiplayer Architecture
 
-# 2. Character System
-**Complex Locomotion System**
-![[Pasted image 20250527144925.png]]
-Character has various states it can be in 
--> UnArmed
-	- UnArmed Normal
-	- UnArmed Crouch
-	- UnArmed Jump
-	- UnArmed Run
--> Bow State
-	- Bow Normal
-	- Bow Crouch
-	- Bow Jump
-	- Bow Running
--> Rifle State
-	- Rifle Normal
-	- Rifle Crouch
-	- Rifle Jump
-	- Rifle Running
--> Sword State
--> Idle State
--> Death State
-The PawnBlueprint holds the variables that are used to set values in the AnimationBlueprint thats attached to the SkeletalMesh Component.
+| Class | Responsibility | Notes |
+|-------|---------------|-------|
+| **AGameModeBase / AGameMode** | Defines game rules and win/loss conditions (server-only) | Only exists on the server |
+| **AGameStateBase / AGameState** | Tracks match state, time, score (server + replicated to all clients) | Syncs global data to clients |
+| **APlayerController** | Represents the player's input and client control logic | First class a player "owns" |
+| **APlayerState** | Holds player-related data (name, score, team, etc.) | Exists on server and all clients |
+| **APawn / ACharacter** | The controllable actor (body) in the world | Possessed by PlayerController |
+| **AHUD** | Basic on-screen UI manager (legacy) | Generally replaced by UMG in modern projects |
+| **UUserWidget** | UI elements created via Unreal Motion Graphics (UMG) | For health bars, ammo, HUDs, menus |
 
-**Head Gaze Tracking**
-![[vivaldi_tZ3Su8bahJ-ezgif.com-cut (1).gif]]
-We dynamically adjust the **rotation value of** neck and upper spines of our character, according to where the players the player is looking to give more dynamic feel.
-![[Pasted image 20250527144956.png]]
+### Architecture Diagrams
 
-**Dynamic Movements (Footsteps, turning)**
-We have implemented an dynamic blending between movements in different direction to give more realistic feel
+<div align="center">
 
-## 3 . Combat & Weapons
-- Combat Camera
-- Weapon 
-	- Equip
-	- Swap
-- Interaction System 
-	- Weapon/Ammo/Grenade Equip/Drop
-- Shooting System (AmmoInventory, Reload, Firing On Server, Animations, VFX, MuzzleFlash)
+![Network Architecture Diagram 1](IMAGE_URL_HERE)
 
-##  4. AIs
-![[Pasted image 20250527165943.png]]
-Dragon **AI LOGIC**: 
-``` mermaid
+![Network Architecture Diagram 2](IMAGE_URL_HERE)
+
+![Network Architecture Diagram 3](IMAGE_URL_HERE)
+
+</div>
+
+---
+
+## 2. 🦾 Character System
+
+### Complex Locomotion System
+
+<div align="center">
+
+![Character Locomotion System](IMAGE_URL_HERE)
+
+</div>
+
+Our character system features multiple states with seamless transitions:
+
+#### 🏃 Movement States
+- **UnArmed State**
+  - UnArmed Normal
+  - UnArmed Crouch
+  - UnArmed Jump
+  - UnArmed Run
+
+- **🏹 Bow State**
+  - Bow Normal
+  - Bow Crouch
+  - Bow Jump
+  - Bow Running
+
+- **🔫 Rifle State**
+  - Rifle Normal
+  - Rifle Crouch
+  - Rifle Jump
+  - Rifle Running
+
+- **⚔️ Sword State**
+- **😴 Idle State**
+- **💀 Death State**
+
+> The PawnBlueprint holds the variables that are used to set values in the AnimationBlueprint attached to the SkeletalMesh Component.
+
+### 👁️ Head Gaze Tracking
+
+<div align="center">
+
+![Head Gaze Tracking Demo](IMAGE_URL_HERE)
+
+</div>
+
+We dynamically adjust the **rotation value** of neck and upper spines of our character, according to where the player is looking to give a more dynamic feel.
+
+<div align="center">
+
+![Head Gaze System Diagram](IMAGE_URL_HERE)
+
+</div>
+
+### 🚶 Dynamic Movements (Footsteps, Turning)
+
+We have implemented dynamic blending between movements in different directions to give a more realistic feel.
+
+---
+
+## 3. ⚔️ Weapons & Combat
+
+### Core Combat Features
+- **🎥 Combat Camera** - Dynamic camera system for combat scenarios
+- **🔫 Weapon Systems**
+  - Equip/Unequip mechanics
+  - Weapon swapping system
+- **🤝 Interaction System**
+  - Weapon/Ammo/Grenade pickup and drop
+- **💥 Shooting System**
+  - AmmoInventory management
+  - Reload mechanics
+  - Server-side firing validation
+  - Combat animations
+  - Visual effects (VFX)
+  - Muzzle flash system
+
+---
+
+## 4. 🤖 AI Systems
+
+<div align="center">
+
+![AI Systems Overview](IMAGE_URL_HERE)
+
+</div>
+
+### 🐉 Dragon AI Logic
+
+```mermaid
 flowchart TD
     A[ROAM] --> B{Player?}
     B -->|No| A
@@ -105,14 +165,43 @@ flowchart TD
     L -->|Landed| D
     L -->|Fight| J
 ```
-**Animation System**
-![[Pasted image 20250527165609.png]]
-**Barghest, Cenatur, Kraken, Griffon**
-![[Pasted image 20250527165725.png]]
-**Kraken**
-![[Pasted image 20250527170018.png]]
-**SwordsMaster**
-![[UnrealEditor_rJ8zmcuKa9.gif]]
+
+### 🎭 Animation System
+
+<div align="center">
+
+![AI Animation System](IMAGE_URL_HERE)
+
+</div>
+
+### 🐺 Creature Collection
+- **Barghest** - Mythical hound creature
+- **Centaur** - Half-human, half-horse warrior
+- **Kraken** - Sea monster with tentacle attacks
+- **Griffon** - Eagle-lion hybrid with aerial combat
+
+<div align="center">
+
+![Creature Collection](IMAGE_URL_HERE)
+
+</div>
+
+### 🐙 Kraken System
+
+<div align="center">
+
+![Kraken AI System](IMAGE_URL_HERE)
+
+</div>
+
+### ⚔️ SwordsMaster AI
+
+<div align="center">
+
+![SwordsMaster Combat](IMAGE_URL_HERE)
+
+</div>
+
 ```mermaid
 graph LR
     R[ROAM] --> A[ALERT]
@@ -127,56 +216,90 @@ graph LR
     A4 --> C
     A --> R
 ```
-## 5. HUD
-![[screenshot20250527172748.png]]
-![[2025 01 25 23 21 15 3-3 screenshot.png]]
-**Compass**
-For the compass HUD, we have an texture that we loop and roll over, to give the compass effect. The position & offset on the texture is changed through the controller class.   
-![[Pasted image 20250527182014.png]]
-**MiniMap**
-There are two-modes,
-1) Camera that is held above head of the player, the output of that camera is passed through an color grading filter. (for performance we render that camera at low resolutions) (**active**)
-2) Track characters location, and maps it onto the premade level texture.
 
-**MessageBox**
-The function to call `showMessageBox()` function can through the `PlayerController` 
+---
 
-**Weapon/Health/Ammo/Grenade**
-The value of those variables are stored within the pawn, and on every change in the value of those variable, a function gets called to update the HUD values. 
-*The ClipAmmo & inventoryAmmo changes based on the weapon currently in possession*
+## 5. 🖼️ User Interface (HUD)
 
-**HitMarker**
-Whenever player manages to land an successive hit, red hitmarker gets cropped up to provide visual-feedback to player.
+<div align="center">
 
-![[UnrealEditor_Uvwf7hT61F.gif]]
-## 6. Audio
-#### **Ambient Audio Objects**  
- Special actors, that get triggered when actor enters within certain radius. Responsible for playing background ambient noise
-`Content/SoundAmbience/Apocalypse`
+![Main HUD Interface](IMAGE_URL_HERE)
 
-**Spatial Audio Attenuation System**
-**Core Features:** 
-• Distance-based volume attenuation (linear/logarithmic curves) 
-• Configurable min/max distance thresholds (400-4000 units) 
-• Real-time 3D position tracking
-**Reverb Processing:** 
-• Send-based reverb with wet/dry control (0.3-0.95 mix) 
-• Distance-dependent reverb send levels • Linear reverb method implementation
-**Spatial Audio:** 
-• Binaural HRTF spatialization 
-• 3D stereo spread (200 units)
-• Omni-directional sound placement 
-• Radius-based spatial falloff (500 units)
-**Advanced Systems:** 
-• Environmental occlusion filtering 
-• Air absorption (frequency-dependent attenuation) 
-• Dynamic listener focus with azimuth scaling 
-• Priority-based audio culling
-**Technical Implementation:** 
-• Plugin-based audio processing 
-• Real-time parameter interpolation 
-• Performance-optimized for multi-source environments
-• Configurable falloff curves and attenuation shapes
+![Secondary HUD Interface](IMAGE_URL_HERE)
+
+</div>
+
+### 🧭 Compass System
+For the compass HUD, we use a texture that loops and rolls over to create the compass effect. The position & offset on the texture is changed through the controller class.
+
+<div align="center">
+
+![Compass System](IMAGE_URL_HERE)
+
+</div>
+
+### 🗺️ MiniMap System
+We implemented two modes:
+
+1. **Camera Mode (Active)** - Camera held above the player's head, output passed through color grading filter (rendered at low resolution for performance)
+2. **Texture Mode** - Track character location and map it onto premade level texture
+
+### 📢 MessageBox System
+The `showMessageBox()` function can be called through the `PlayerController`.
+
+### 📊 Status Displays
+- **Weapon/Health/Ammo/Grenade** - Values stored within the pawn, HUD updates on value changes
+- **ClipAmmo & InventoryAmmo** - Changes based on currently equipped weapon
+
+### 🎯 HitMarker System
+When players land successful hits, red hitmarkers appear to provide visual feedback.
+
+<div align="center">
+
+![HitMarker System](IMAGE_URL_HERE)
+
+</div>
+
+---
+
+## 6. 🔊 Audio System
+
+### 🌍 Ambient Audio Objects
+Special actors that trigger when players enter a certain radius, responsible for playing background ambient noise.
+> Location: `Content/SoundAmbience/Apocalypse`
+
+### 🎧 Spatial Audio Attenuation System
+
+#### **Core Features:**
+- Distance-based volume attenuation (linear/logarithmic curves)
+- Configurable min/max distance thresholds (400-4000 units)
+- Real-time 3D position tracking
+
+#### **Reverb Processing:**
+- Send-based reverb with wet/dry control (0.3-0.95 mix)
+- Distance-dependent reverb send levels
+- Linear reverb method implementation
+
+#### **Spatial Audio:**
+- Binaural HRTF spatialization
+- 3D stereo spread (200 units)
+- Omni-directional sound placement
+- Radius-based spatial falloff (500 units)
+
+#### **Advanced Systems:**
+- Environmental occlusion filtering
+- Air absorption (frequency-dependent attenuation)
+- Dynamic listener focus with azimuth scaling
+- Priority-based audio culling
+
+#### **Technical Implementation:**
+- Plugin-based audio processing
+- Real-time parameter interpolation
+- Performance-optimized for multi-source environments
+- Configurable falloff curves and attenuation shapes
+
+### Audio Processing Pipeline
+
 ```mermaid
 flowchart TD
     A[Audio Source Input] --> B{Distance Check}
@@ -221,18 +344,45 @@ flowchart TD
     X --> Z[Final Audio Output]
     Y --> Z
     E --> AA[Remove from Pipeline]
-
 ```
 
+### 🦶 Dynamic Audio Effects
+**Footsteps, Roars, Growls, Screams** and other audio effects are mostly baked into the animations themselves.
 
-#### **Footsteps**, **Roars** , Growl, Scream and other audio effects
-We have mostly baked these sounds in the animation themselves, 
-**However for gun-impact/hit sounds, we check tag of the material to play different sounds. Even for footsteps we have mechanism in place that changes sounds according to ground, but it's disabled due to lack of quality walking sound assets** 
+> **Note:** For gun-impact/hit sounds, we check material tags to play different sounds. We also have a mechanism for footsteps that changes sounds according to ground type, but it's currently disabled due to lack of quality walking sound assets.
 
-## 7. PropHunt Game Mode
-There's fun multiplayer `gamemode` in our game, where one of the players randomly gets selected as an prop who has to hide from the rest players whose job is to hunt, within the timeframe. 
-**Prop Player, have few interesting powers**
-1) Ability to transform into any model it's contacting. 
-![[UnrealEditor_ScrIA6gnMz.gif]]
-2) The PropPlayer ability can make copies of itself to confuse, bait and lure enemies. 
-![[UnrealEditor_xj52lYjk0X.gif]]
+---
+
+## 7. 🎯 Prop Hunt Game Mode
+
+A fun multiplayer game mode where one player is randomly selected as a prop who must hide from the other players (hunters) within a time limit.
+
+### 🎭 Prop Player Abilities
+
+#### 1. 🔄 Transformation System
+Ability to transform into any model the prop player is contacting.
+
+<div align="center">
+
+![Prop Transformation System](IMAGE_URL_HERE)
+
+</div>
+
+#### 2. 🪞 Decoy System  
+The PropPlayer can create copies of itself to confuse, bait, and lure enemies.
+
+<div align="center">
+
+![Prop Decoy System](IMAGE_URL_HERE)
+
+</div>
+
+---
+
+<div align="center">
+
+### ⭐ **Star this repository if you found it interesting!** ⭐
+
+Made with ❤️ using Unreal Engine 5.5.4
+
+</div>
