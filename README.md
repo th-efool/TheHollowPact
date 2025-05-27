@@ -232,7 +232,7 @@ For the compass HUD, we use a texture that loops and rolls over to create the co
 
 <div align="center">
 
-![Compass System](IMAGE_URL_HERE)
+![Compass System](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527182014.png?raw=true)
 
 </div>
 
