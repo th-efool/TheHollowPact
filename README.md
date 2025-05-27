@@ -24,7 +24,7 @@ _Note: Multiplayer mode is still buggy with few errors so i have disabled it, bu
 3. [Weapons & Combat](#3-weapons--combat)
 4. [AI Systems](#4-ai-systems)
 5. [User Interface (HUD)](#5-user-interface-hud)
-6. [Audio System](#6-audio-system)
+6. [Visuals and Audio System](#6-visuals-audio-system)
 7. [Prop Hunt Game Mode](#7-prop-hunt-game-mode)
 
 ---
@@ -543,7 +543,7 @@ When players land successful hits, red hitmarkers appear to provide visual feedb
 
 ---
 
-## 6. 🔊 Audio System
+## 6. 🔊 Visuals & Audio System
 
 ### 🌍 Ambient Audio Objects
 Special actors that trigger when players enter a certain radius, responsible for playing background ambient noise.
@@ -631,6 +631,8 @@ flowchart TD
 **Footsteps, Roars, Growls, Screams** and other audio effects are mostly baked into the animations themselves.
 
 > **Note:** For gun-impact/hit sounds, we check material tags to play different sounds. We also have a mechanism for footsteps that changes sounds according to ground type, but it's currently disabled due to lack of quality walking sound assets.
+
+### Few `PostProcessing` and `ColorGrading` filters have been applied to enhance the overall look of the game
 
 ---
 
