@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/ed3e35f9-3463-4389-9b2c-7829096b6573)# 🎮 TheHollowPact
+# 🎮 TheHollowPact
 
 **Engine:** `Unreal Engine 5.5.4`  
 **Mode:** `Multiplayer (Listen Server)`  
