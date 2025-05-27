@@ -6,7 +6,7 @@
 **Perspective:** `Over-the-shoulder third person`  
 **Target Platform:** `PC (with scalability for Console)`
 
-To Play the Game Directly, you can download and run the executable from below: 
+To Play the Game Directly, you can run the executable from here: 
 [🎮Game.exe](https://drive.google.com/file/d/1P3dZV_-bjo79fWiBQgCWrdzBUfkiG-GI/view?usp=sharing)
 
 To look at the Source Code,
