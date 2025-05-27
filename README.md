@@ -6,6 +6,7 @@
 **Perspective:** `Over-the-shoulder third person`  
 **Target Platform:** `PC (with scalability for Console)`
 
+_Note: Multiplayer mode is still buggy with few errors so it's disabled code, but the entire code is still full network replicated_
 ---
 
 ## Table of Contents
@@ -20,6 +21,9 @@
 ---
 
 ## 1. Multiplayer Architecture
+![Network Architecture Diagram 1](https://github.com/th-efool/TheHollowPact/blob/main/docs/screenshot20250527195357.png?raw=true)
+
+## Core Framework Components
 
 | Class | Responsibility | Notes |
 |-------|---------------|-------|
@@ -31,13 +35,283 @@
 | **AHUD** | Basic on-screen UI manager (legacy) | Generally replaced by UMG in modern projects |
 | **UUserWidget** | UI elements created via Unreal Motion Graphics (UMG) | For health bars, ammo, HUDs, menus |
 
-### Architecture Diagrams
+# Unreal Engine Multiplayer Framework (diagram for reference & context)  (diagram source: UnrealForums)
+![Network Architecture Diagram 2](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527144745.png?raw=true)
+## Network Topology & Data Flow
 
-<div align="center">
+### Server Instance (Authority)
+```cpp
+// Authority components - single source of truth
+GameMode* GM_PropHuntGameMode;           // Game logic, rules, state transitions
+GameState* SharedGameState;              // Global match data, replicated to all
+PlayerState* PlayerStates[MAX_PLAYERS];  // Per-player persistent data
+PlayerController* Controllers[MAX_PLAYERS]; // Input handling, RPC routing
+Pawn* Characters[MAX_PLAYERS];           // World entities, physics simulation
+```
 
-![Network Architecture Diagram 1](https://github.com/th-efool/TheHollowPact/blob/main/docs/screenshot20250527195357.png?raw=true)
+### Client Instance (Proxy)
+```cpp
+// Replicated proxies - receive updates from server
+GameState* ReplicatedGameState;          // Read-only match state
+PlayerState* AllPlayerStates[];          // All player data for scoreboard/UI
+PlayerController* OwnedController;       // Local input authority
+PlayerController* RemoteControllers[];   // Simulated proxies
+Pawn* OwnedCharacter;                   // Autonomous proxy with prediction
+Pawn* RemoteCharacters[];               // Simulated proxies
+HUD* LocalHUD;                          // Client-side UI rendering
+UserWidget* UIElements[];               // Local interface components
+```
 
-![Network Architecture Diagram 2](IMAGE_URL_HERE)
+## Replication Architecture
+
+### Authority-Based Replication (Red Lines)
+**GameState → All Clients**
+- Match timer, round state, team scores
+- Global game configuration
+- Environmental state changes
+
+**PlayerState → All Clients**  
+- Player names, scores, teams
+- Persistent player data
+- Cross-client visibility for UI
+
+### Ownership-Based Replication (Blue Lines)
+**PlayerController → Owning Client Only**
+- Input state, camera data
+- Client-specific settings
+- Private player information
+
+**Pawn → Owning Client (Autonomous) + Others (Simulated)**
+- Movement prediction on owning client
+- Replicated movement to other clients
+- Combat state, health, animations
+
+## Network Roles & Proxy Types
+
+### Server Authority Components
+```cpp
+// GameMode - Server exclusive logic
+class AGM_PropHuntGameMode : public AGameModeBase {
+    UCLASS()
+    // Never replicated, exists only on server
+    // Handles: player spawning, game rules, win conditions
+    
+    virtual void PostLogin(APlayerController* NewPlayer) override;
+    virtual void HandleMatchHasStarted() override;
+    virtual bool ReadyToStartMatch_Implementation() override;
+};
+```
+
+### Replicated State Management
+```cpp
+// GameState - Replicated to all clients
+class ACustomGameState : public AGameStateBase {
+    UCLASS()
+    
+    UPROPERTY(Replicated)
+    float MatchTimer;
+    
+    UPROPERTY(Replicated)
+    EGamePhase CurrentPhase;
+    
+    UPROPERTY(ReplicatedUsing=OnRep_TeamScores)
+    TArray<int32> TeamScores;
+    
+    UFUNCTION()
+    void OnRep_TeamScores();
+};
+
+// PlayerState - Per-player replicated data
+class ACustomPlayerState : public APlayerState {
+    UCLASS()
+    
+    UPROPERTY(Replicated)
+    int32 Kills;
+    
+    UPROPERTY(Replicated)
+    EPlayerTeam Team;
+    
+    UPROPERTY(ReplicatedUsing=OnRep_Health)
+    float Health;
+};
+```
+
+### Ownership & Control Flow
+```cpp
+// PlayerController - Owned by specific client
+class APC_PropHuntController : public APlayerController {
+    UCLASS()
+    
+    // Client → Server RPCs (input/commands)
+    UFUNCTION(Server, Reliable)
+    void ServerFireWeapon(FVector Origin, FVector Direction);
+    
+    // Server → Client RPCs (feedback/effects)
+    UFUNCTION(Client, Reliable)
+    void ClientShowHitMarker();
+    
+    // Autonomous proxy functions
+    virtual void SetupInputComponent() override;
+    virtual void Tick(float DeltaTime) override;
+};
+```
+
+### Pawn Replication Complexity
+```cpp
+// Character - Complex replication behavior
+class ABP_ThirdPersonCharacter : public ACharacter {
+    UCLASS()
+    
+    // Replicated properties with different update frequencies
+    UPROPERTY(Replicated)
+    float Health;                    // High frequency
+    
+    UPROPERTY(ReplicatedUsing=OnRep_WeaponState)
+    EWeaponState CurrentWeapon;      // Event-based
+    
+    UPROPERTY(Replicated)
+    FVector_NetQuantize10 ReplicatedMovement; // Compressed movement
+    
+    // Server-side validation
+    UFUNCTION(Server, Reliable, WithValidation)
+    void ServerMove(float Timestamp, FVector NewLocation);
+    bool ServerMove_Validate(float Timestamp, FVector NewLocation);
+    void ServerMove_Implementation(float Timestamp, FVector NewLocation);
+    
+    // Client-side prediction
+    virtual void OnRep_ReplicatedMovement() override;
+    virtual void CorrectClientMovement() override;
+};
+```
+
+## Client-Side Systems (No Replication)
+
+### HUD & UI Architecture
+```cpp
+// HUD - Client-only rendering
+class ACustomHUD : public AHUD {
+    UCLASS()
+    
+    // Local rendering, no network traffic
+    virtual void DrawHUD() override;
+    virtual void BeginPlay() override;
+    
+    // UI widget management
+    UPROPERTY(BlueprintReadOnly)
+    class UMainHUDWidget* MainWidget;
+};
+
+// UserWidget - Pure client-side UI
+class UMainHUDWidget : public UUserWidget {
+    UCLASS()
+    
+    // Reads from replicated data, no direct network calls
+    UFUNCTION(BlueprintImplementableEvent)
+    void UpdateHealthBar(float HealthPercent);
+    
+    UFUNCTION(BlueprintImplementableEvent)
+    void UpdateAmmoDisplay(int32 CurrentAmmo, int32 MaxAmmo);
+};
+```
+
+## Network Performance Optimizations
+
+### Replication Frequency Control
+```cpp
+// Variable replication rates based on importance
+UPROPERTY(Replicated, meta = (ReplicationFrequency = 60.0f))
+FVector HighFrequencyMovement;
+
+UPROPERTY(Replicated, meta = (ReplicationFrequency = 10.0f))
+int32 LowFrequencyScore;
+
+// Conditional replication
+UPROPERTY(ReplicatedUsing=OnRep_Health, Condition=COND_OwnerOnly)
+float PrivateHealth;
+
+UPROPERTY(Replicated, Condition=COND_SkipOwner)
+FVector RemotePlayerLocation;
+```
+
+### RPC Patterns & Reliability
+```cpp
+// Reliable RPCs - Guaranteed delivery, ordered
+UFUNCTION(Server, Reliable)
+void ServerCriticalAction();
+
+// Unreliable RPCs - Best effort, higher performance
+UFUNCTION(Server, Unreliable)
+void ServerMovementUpdate(FVector Location);
+
+// Multicast RPCs - Server to all clients
+UFUNCTION(NetMulticast, Reliable)
+void MulticastExplosionEffect(FVector Location);
+```
+
+## Authority Validation & Anti-Cheat
+
+### Server-Side Validation
+```cpp
+// Movement validation example
+bool ABP_ThirdPersonCharacter::ServerMove_Validate(float Timestamp, FVector NewLocation) {
+    // Distance check
+    float MaxMoveDist = GetMaxSpeed() * (Timestamp - LastMoveTimestamp) * 1.1f;
+    if (FVector::Dist(GetActorLocation(), NewLocation) > MaxMoveDist) {
+        return false; // Potential speed hack
+    }
+    
+    // Physics validation
+    if (!GetWorld()->LineTraceSingleByChannel(HitResult, GetActorLocation(), NewLocation, ECC_Pawn)) {
+        return false; // Wall clipping attempt
+    }
+    
+    return true;
+}
+```
+
+### Client Prediction & Rollback
+```cpp
+// Client-side prediction with server reconciliation
+void ABP_ThirdPersonCharacter::ClientPredictMovement(float DeltaTime) {
+    if (IsLocallyControlled()) {
+        // Predict movement locally
+        FVector PredictedLocation = PredictNextLocation(DeltaTime);
+        SetActorLocation(PredictedLocation);
+        
+        // Store for rollback if server disagrees
+        MovementHistory.Add({GetWorld()->GetTimeSeconds(), PredictedLocation});
+        
+        // Send to server for validation
+        ServerMove(GetWorld()->GetTimeSeconds(), PredictedLocation);
+    }
+}
+
+void ABP_ThirdPersonCharacter::OnRep_ReplicatedMovement() {
+    if (!IsLocallyControlled()) {
+        // Apply server movement to remote clients
+        SetActorLocation(ReplicatedMovement_Location);
+    } else {
+        // Reconcile prediction with server authority
+        ReconcileMovement();
+    }
+}
+```
+
+## Memory & Performance Considerations
+
+### Component Lifecycle
+- **Server**: Manages all components, highest memory footprint
+- **Clients**: Only store relevant replicated data + local UI
+- **Garbage Collection**: Automatic cleanup of disconnected player objects
+- **Network Culling**: Distance-based relevance filtering
+
+### Bandwidth Optimization
+- **Delta Compression**: Only replicate changed values
+- **Property Conditions**: Replicate only to relevant clients
+- **Update Frequencies**: Critical data at 60Hz, UI data at 10Hz
+- **RPC Batching**: Combine multiple calls into single network packet
+
+This architecture ensures deterministic gameplay while minimizing network overhead and maintaining responsive client-side prediction.
 
 ![Network Architecture Diagram 3](https://github.com/th-efool/TheHollowPact/blob/main/docs/batch/Pasted%20image%2020250527144749.png?raw=true)
 
