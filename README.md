@@ -383,8 +383,7 @@ We dynamically adjust the **rotation value** of neck and upper spines of our cha
 
 ### Dynamic Movements (Footsteps, Turning)
 
-![video](https://github.com/user-attachments/assets/553ae8ba-bcf8-4cd6-831e-65dc5679efd9)
-![video2](https://www.youtube.com/watch?v=UWu-G2tD-dk)
+![video](https://github.com/th-efool/TheHollowPact/blob/main/docs/UnrealEditor_ua7IahfxgZonline-video-cutter.com-ezgif.com-gif-maker.gif?raw=true)
 
 
 We have implemented dynamic blending between movements in different directions to give a more realistic feel.
