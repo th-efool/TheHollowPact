@@ -384,7 +384,7 @@ We dynamically adjust the **rotation value** of neck and upper spines of our cha
 ### Dynamic Movements (Footsteps, Turning)
 
 We have implemented dynamic blending between movements in different directions to give a more realistic feel.
-
+![](https://www.youtube.com/watch?v=iX5LzCGfMeo)
 ---
 
 ## 3. Weapons & Combat
