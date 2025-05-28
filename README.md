@@ -397,7 +397,7 @@ We have implemented dynamic blending between movements in different directions t
 
 ### Core Combat Features
 #### **Combat Camera**
-![Combat Camera][(https://github.com/th-efool/TheHollowPact/blob/main/docs/PotPlayerMini_L20xNXPm3R%20(online-video-cutter.com).gif?raw=true)
+![Combat Camera](https://github.com/th-efool/TheHollowPact/blob/main/docs/PotPlayerMini_L20xNXPm3R%20(online-video-cutter.com).gif?raw=true)
 | State | Trigger | Camera Distance | Exit Condition |
 |-------|---------|----------------|----------------|
 | **Normal TPS** | Default | Standard distance | RMB pressed + weapon equipped |
