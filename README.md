@@ -397,10 +397,60 @@ We have implemented dynamic blending between movements in different directions t
 
 ### Core Combat Features
 - **Combat Camera** - Dynamic camera system for combat scenarios
+
+  
 - **Weapon Systems**
-  - Equip/Unequip mechanics
-  - Weapon swapping system
-- **Interaction System**
+# Weapon System Documentation
+## Core System Variables
+| Variable | Type | Purpose | Values |
+|----------|------|---------|--------|
+| `BackWeaponIndex` | Integer | Tracks weapon stored on back | -1 (empty), 0-N (weapon ID) |
+| `HandWeaponIndex` | Integer | Tracks weapon in active hand | -1 (empty), 0-N (weapon ID) |
+| `ClipAmmo[]` | Array | Current ammo in clip for each weapon | 0 to ClipMaxAmmo[index] |
+| `ClipMaxAmmo[]` | Array | Maximum clip capacity for each weapon | Weapon-specific values |
+| `InventoryAmmo[]` | Array | Reserve ammo for each weapon | 0 to max inventory |
+
+## Weapon States & Actions
+| Weapon Slot | Current State | Visibility | Available Actions | Description |
+|-------------|---------------|------------|-------------------|-------------|
+| **Active Hand** | Equipped | Visible | Swap, Unequip | Primary weapon slot. Player actively holds and can use this weapon for combat, aiming, and firing. |
+| **Back Holster** | Holstered | Visible | Equip, Swap | Secondary weapon slot. Weapon is visible on player's back but cannot be used until equipped to active hand. |
+| **Empty Hand** | None | N/A | Equip from Back, Pickup | No weapon in hand. Can equip from back or pickup new weapon. |
+| **Empty Back** | None | N/A | Holster from Hand | No weapon on back. Can holster current hand weapon. |
+
+## Player Actions
+| Action | Input Key | Condition | Result | Animation | HUD Update |
+|--------|-----------|-----------|--------|-----------|------------|
+| **Equip from Back** | `E` | Hand empty + Weapon on back | Move weapon from back to hand | Draw animation | Update to hand weapon stats |
+| **Unequip to Back** | `E` | Weapon in hand + Back empty | Move weapon from hand to back | Holster animation | Clear hand weapon HUD |
+| **Swap Weapons** | `Tab` | Both slots occupied | Exchange hand ↔ back positions | Swap animation | Update to new hand weapon |
+| **Drop Weapon** | `G` | Weapon in hand or back | Remove from inventory, spawn in world | Drop animation | Remove from HUD |
+| **Pickup Weapon** | `F` | Near weapon + Available slot | Add to inventory (hand preferred) | Pickup animation | Add weapon to HUD |
+
+## Animation Event System
+| Animation Phase | Event Trigger | System Response | HUD Response |
+|-----------------|---------------|-----------------|--------------|
+| **Start Animation** | Animation begins | Lock player input | Show transition indicator |
+| **Mid-Point Frame** | Notify event called | Switch weapon visibility | Begin HUD transition |
+| **Complete Animation** | Animation ends | Unlock player input | Finalize HUD update |
+
+## HUD Update Logic
+| Trigger | HUD Elements Updated | Data Source |
+|---------|---------------------|-------------|
+| Weapon equipped to hand | Ammo display, weapon name, crosshair | `ClipAmmo[HandWeaponIndex]`, `InventoryAmmo[HandWeaponIndex]` |
+| Weapon holstered | Clear active weapon display | N/A |
+| Weapon swapped | All weapon-specific UI elements | New `HandWeaponIndex` data |
+| Ammo consumed | Ammo counters | Updated `ClipAmmo[HandWeaponIndex]` |
+
+## System Flow Summary
+1. **Index Selection**: `HandWeaponIndex` determines active weapon
+2. **Data Retrieval**: Arrays accessed using weapon index for ammo data
+3. **Animation Trigger**: Player input starts appropriate animation
+4. **Visibility Switch**: Mid-animation event handles weapon visibility toggle
+5. **HUD Update**: Interface updates based on new weapon configuration
+6. **State Completion**: System ready for next player action
+
+ - **Interaction System**
   - Weapon/Ammo/Grenade pickup and drop
 - **Shooting System**
   - AmmoInventory management
