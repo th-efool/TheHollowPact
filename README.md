@@ -396,12 +396,19 @@ We have implemented dynamic blending between movements in different directions t
 ## 3. Weapons & Combat
 
 ### Core Combat Features
-- **Combat Camera** - Dynamic camera system for combat scenarios
+#### **Combat Camera**
 
+| State | Trigger | Camera Distance | Exit Condition |
+|-------|---------|----------------|----------------|
+| **Normal TPS** | Default | Standard distance | RMB pressed + weapon equipped |
+| **Combat Mode** | RMB hold + weapon equipped | Closer to character | RMB release OR weapon unequip/drop |
+
+| Action | Input | Transition | Result |
+|--------|-------|------------|---------|
+| **Enter Combat** | RMB hold | Sigmoid curve | Close camera distance |
+| **Exit Combat** | RMB release OR weapon lost | Sigmoid curve | Return to normal TPS |
   
-- **Weapon Systems**
-# Weapon System Documentation
-## Core System Variables
+#### Weapon System 
 | Variable | Type | Purpose | Values |
 |----------|------|---------|--------|
 | `BackWeaponIndex` | Integer | Tracks weapon stored on back | -1 (empty), 0-N (weapon ID) |
