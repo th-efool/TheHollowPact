@@ -484,8 +484,8 @@ We have implemented dynamic blending between movements in different directions t
 ```mermaid
 flowchart TD
   A[Shoot ActionBinding Pressed] --> B{Is Special Weapon}
-  B -- Yes --> Z[Handle Melee Logic]
-  B -- No --> C{Requires Drawing Weapon}
+  B -- Yes --> Z[Handle MeleeAttack Logic]
+  B -- No --> C{Requires Drawing}
   C -- Yes --> D{Activation Condition Met}
   D -- No --> E[Abort Fire Logic]
   D -- Yes --> F[Start Server Fire Logic]
