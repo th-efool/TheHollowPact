@@ -397,11 +397,12 @@ We have implemented dynamic blending between movements in different directions t
 
 ### Core Combat Features
 #### **Combat Camera**
-![Combat Camera](https://github.com/th-efool/TheHollowPact/blob/main/docs/PotPlayerMini_L20xNXPm3R%20(online-video-cutter.com).gif?raw=true)
 | State | Trigger | Camera Distance | Exit Condition |
 |-------|---------|----------------|----------------|
 | **Normal TPS** | Default | Standard distance | RMB pressed + weapon equipped |
 | **Combat Mode** | RMB hold + weapon equipped | Closer to character | RMB release OR weapon unequip/drop |
+
+![Combat Camera](https://github.com/th-efool/TheHollowPact/blob/main/docs/PotPlayerMini_L20xNXPm3R%20(online-video-cutter.com).gif?raw=true)
 
 | Action | Input | Transition | Result |
 |--------|-------|------------|---------|
@@ -417,7 +418,7 @@ We have implemented dynamic blending between movements in different directions t
 | `ClipMaxAmmo[]` | Array | Maximum clip capacity for each weapon | Weapon-specific values |
 | `InventoryAmmo[]` | Array | Reserve ammo for each weapon | 0 to max inventory |
 
-## Weapon States & Actions
+#### Weapon States & Actions
 | Weapon Slot | Current State | Visibility | Available Actions | Description |
 |-------------|---------------|------------|-------------------|-------------|
 | **Active Hand** | Equipped | Visible | Swap, Unequip | Primary weapon slot. Player actively holds and can use this weapon for combat, aiming, and firing. |
@@ -425,7 +426,7 @@ We have implemented dynamic blending between movements in different directions t
 | **Empty Hand** | None | N/A | Equip from Back, Pickup | No weapon in hand. Can equip from back or pickup new weapon. |
 | **Empty Back** | None | N/A | Holster from Hand | No weapon on back. Can holster current hand weapon. |
 
-## Player Actions
+#### Player Actions
 | Action | Input Key | Condition | Result | Animation | HUD Update |
 |--------|-----------|-----------|--------|-----------|------------|
 | **Equip from Back** | `E` | Hand empty + Weapon on back | Move weapon from back to hand | Draw animation | Update to hand weapon stats |
@@ -434,14 +435,14 @@ We have implemented dynamic blending between movements in different directions t
 | **Drop Weapon** | `G` | Weapon in hand or back | Remove from inventory, spawn in world | Drop animation | Remove from HUD |
 | **Pickup Weapon** | `F` | Near weapon + Available slot | Add to inventory (hand preferred) | Pickup animation | Add weapon to HUD |
 
-## Animation Event System
+#### Animation Event System
 | Animation Phase | Event Trigger | System Response | HUD Response |
 |-----------------|---------------|-----------------|--------------|
 | **Start Animation** | Animation begins | Lock player input | Show transition indicator |
 | **Mid-Point Frame** | Notify event called | Switch weapon visibility | Begin HUD transition |
 | **Complete Animation** | Animation ends | Unlock player input | Finalize HUD update |
 
-## HUD Update Logic
+#### HUD Update Logic
 | Trigger | HUD Elements Updated | Data Source |
 |---------|---------------------|-------------|
 | Weapon equipped to hand | Ammo display, weapon name, crosshair | `ClipAmmo[HandWeaponIndex]`, `InventoryAmmo[HandWeaponIndex]` |
@@ -449,17 +450,35 @@ We have implemented dynamic blending between movements in different directions t
 | Weapon swapped | All weapon-specific UI elements | New `HandWeaponIndex` data |
 | Ammo consumed | Ammo counters | Updated `ClipAmmo[HandWeaponIndex]` |
 
-## System Flow Summary
-1. **Index Selection**: `HandWeaponIndex` determines active weapon
-2. **Data Retrieval**: Arrays accessed using weapon index for ammo data
-3. **Animation Trigger**: Player input starts appropriate animation
-4. **Visibility Switch**: Mid-animation event handles weapon visibility toggle
-5. **HUD Update**: Interface updates based on new weapon configuration
-6. **State Completion**: System ready for next player action
 
- - **Interaction System**
-  - Weapon/Ammo/Grenade pickup and drop
-- **Shooting System**
+### **Interaction System**
+#### Pickup & Interaction System
+| Class | Parent | Type | Purpose |
+|-------|--------|------|---------|
+| **PickupMaster** | Base Class | Abstract | Core pickup functionality and interaction logic |
+| **BP_AmmoWeaponPickUp** | PickupMaster | Parent | Base class for all ammunition pickups |
+| **BP_WeaponPickup** | PickupMaster | Parent | Base class for all weapon pickups |
+| **BP_Grenade** | BP_AmmoWeaponPickUp | Child | Grenade ammunition pickup |
+| **BP_LandMine** | BP_AmmoWeaponPickUp | Child | Landmine ammunition pickup |
+![image](https://github.com/user-attachments/assets/e8c607d4-a8c5-4f7f-88aa-fb04d959619e)
+
+#### Widget System
+| Component | Trigger | Display | Function |
+|-----------|---------|---------|----------|
+| **Widget Component** | Player in interaction radius | Hovering UI widget | Shows pickup prompt and item info |
+| **Interaction Radius** | Proximity detection | Auto-show/hide | Manages widget visibility based on player distance |
+
+#### Pickup Types by Weapon
+| Weapon | Pickup Class | Widget Asset | Ammo Asset |
+|--------|--------------|--------------|------------|
+| **W1-Gun** | BP_WeaponPickup | W1-GunWidget | W1Ammo |
+| **W2-Gun** | BP_WeaponPickup | W2-GunWidget | W2Ammo |
+| **W3-Gun** | BP_WeaponPickup | W3-GunWidget | W3Ammo |
+| **W4-Gun** | BP_WeaponPickup | W4-GunWidget | W4Ammo |
+| **W5-Gun** | BP_WeaponPickup | W5-GunWidget | W5Ammo |
+| **W6-Gun** | BP_WeaponPickup | W6-GunWidget | W6Ammo |
+| **W7-Bow** | BP_WeaponPickup | W7-BowWidget | W7Ammo |
+**Shooting System**
   - AmmoInventory management
   - Reload mechanics
   - Server-side firing validation
