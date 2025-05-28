@@ -479,6 +479,7 @@ We have implemented dynamic blending between movements in different directions t
 | **W5-Gun** | BP_WeaponPickup | W5-GunWidget | W5Ammo |
 | **W6-Gun** | BP_WeaponPickup | W6-GunWidget | W6Ammo |
 | **W7-Bow** | BP_WeaponPickup | W7-BowWidget | W7Ammo |
+
 **Shooting System**
   - AmmoInventory management
   - Reload mechanics
