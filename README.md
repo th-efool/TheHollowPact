@@ -460,6 +460,7 @@ We have implemented dynamic blending between movements in different directions t
 | **BP_WeaponPickup** | PickupMaster | Parent | Base class for all weapon pickups |
 | **BP_Grenade** | BP_AmmoWeaponPickUp | Child | Grenade ammunition pickup |
 | **BP_LandMine** | BP_AmmoWeaponPickUp | Child | Landmine ammunition pickup |
+
 ![image](https://github.com/user-attachments/assets/e8c607d4-a8c5-4f7f-88aa-fb04d959619e)
 
 #### Widget System
