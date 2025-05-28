@@ -480,13 +480,102 @@ We have implemented dynamic blending between movements in different directions t
 | **W6-Gun** | BP_WeaponPickup | W6-GunWidget | W6Ammo |
 | **W7-Bow** | BP_WeaponPickup | W7-BowWidget | W7Ammo |
 
-**Shooting System**
-  - AmmoInventory management
-  - Reload mechanics
-  - Server-side firing validation
-  - Combat animations
-  - Visual effects (VFX)
-  - Muzzle flash system
+### **Shooting System**
+```mermaid
+flowchart TD
+  A[Shoot ActionBinding Pressed] --> B{Is Special Weapon}
+  B -- Yes --> Z[Handle Melee Logic]
+  B -- No --> C{Requires Drawing Weapon}
+  C -- Yes --> D{Activation Condition Met}
+  D -- No --> E[Abort Fire Logic]
+  D -- Yes --> F[Start Server Fire Logic]
+  C -- No --> F
+
+  F --> G{ClipAmmo > 0}
+  G -- No --> H[Reload on Server and Multicast]
+  G -- Yes --> I{Is Automatic Weapon}
+
+  I -- Yes --> J[Start Fire Timer Using FireRate]
+  J --> K{Trigger Released or Reload or Swap}
+  K -- Yes --> L[Stop Automatic Fire]
+  J --> M[Call Fire Function Repeatedly]
+
+  I -- No --> N[Call Fire Function Once]
+
+  M --> O[Run Fire Function]
+  N --> O
+
+  O --> P[Multicast Muzzle Flash]
+  P --> Q[Line Trace: Muzzle to Camera Forward]
+  Q --> R[Update ClipAmmo on Owning Client]
+  R --> S[Multicast Animation and AI Noise]
+  S --> T{Hit Detected}
+  T -- No --> U[End Sequence]
+  T -- Yes --> V{Hit Type}
+  V -- Hunter --> W[Blood Effect + Hitmarker + Apply Damage]
+  V -- PropCharacter --> X[Blood Effect + Hitmarker + Apply Damage]
+  V -- Monster --> Y[Blood Effect + Hitmarker + Apply Damage]
+  V -- Surface --> Z1[Material Hit Effect]
+  V -- Explosive --> Z2[Explosion + Damage Falloff + Apply Damage]
+```
+# Shooting System Documentation
+
+## Input Flow
+
+| Step | Check | Condition | Action |
+|------|-------|-----------|---------|
+| **1** | Shoot Action Pressed | Special weapon (sword) | Skip gun logic, handle melee |
+| **2** | Weapon Type | Requires drawing (bow) | Check activation condition |
+| **3** | Server Logic | Activation satisfied | Start fire sequence |
+
+## Server Fire Logic
+
+| Step | Process | Check | Result |
+|------|---------|-------|--------|
+| **1** | Reload Handling | `ClipAmmo > 0` | If false: Reload on server + multicast |
+| **2** | Fire Mode Check | `IsAutomatic[HandWeaponIndex]` | True: Start fire timer / False: Single fire |
+| **3** | Automatic Fire | Timer active | Call fire function at `fireRate[index]` intervals |
+| **4** | Timer Stop | Trigger release OR reload OR weapon swap/unequip | End automatic fire |
+
+## Fire Function (Server)
+
+| Order | Action | Network | Details |
+|-------|--------|---------|---------|
+| **1** | Muzzle Flash | Multicast | Visual effect at weapon muzzle |
+| **2** | Line Trace | Server | Start: Muzzle point / End: Camera forward × bullet range |
+| **3** | Magazine Update | Owning Client | Decrease `ClipAmmo[HandWeaponIndex]` |
+| **4** | Animation & Noise | Multicast + Server | Fire animation + AI noise signal |
+| **5** | Hit Detection | Server | Process hit results |
+| **6** | Damage Application | Interface | Call damage interface on hit actor |
+
+## Hit Detection & Effects
+
+| Hit Target | Effect Type | Additional Actions |
+|------------|-------------|-------------------|
+| **Hunter** (Player) | Blood effect | Show hitmarker UI |
+| **PropCharacter** | Blood effect | Show hitmarker UI |
+| **Monster** | Blood effect | Show hitmarker UI |
+| **Surface** | Material-based | Metal/rock/wood bullet impact |
+| **Explosive Weapon** | Explosion effect | Run damage falloff calculation |
+
+## System Arrays
+
+| Array | Type | Purpose | Index |
+|-------|------|---------|-------|
+| `IsAutomatic[]` | Boolean | Determines fire mode | `HandWeaponIndex` |
+| `fireRate[]` | Float | Fire interval for automatic weapons | `HandWeaponIndex` |
+| `ClipAmmo[]` | Integer | Current magazine ammo | `HandWeaponIndex` |
+
+## Network Architecture
+
+| Function | Execution | Purpose |
+|----------|-----------|---------|
+| **Shoot Action** | Client Input | Trigger fire sequence |
+| **Fire Logic** | Server | Authority for shooting mechanics |
+| **Muzzle Flash** | Multicast | Visual feedback |
+| **Magazine Update** | Owning Client | UI ammo display |
+| **Animation & Noise** | Multicast + Server | Visual + AI detection |
+
 
 ---
 
