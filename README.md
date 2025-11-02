@@ -30,7 +30,6 @@ _Note: Multiplayer mode is still buggy with few errors so i have disabled it, bu
 ---
 
 ## 1. Multiplayer Architecture
-
 ## Core Framework Components
 
 | Class | Responsibility | Notes |
