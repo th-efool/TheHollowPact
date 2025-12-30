@@ -23,14 +23,13 @@ The project emphasizes scalable networking patterns (GameMode/GameState/PlayerSt
 To Play the Game Directly, you can run the executable from here: 
 [🎮Game.exe](https://drive.google.com/file/d/1P3dZV_-bjo79fWiBQgCWrdzBUfkiG-GI/view?usp=sharing)
 
-To look at the Source Code
-1. clone the repositry
-2. download [Resources.Zip](https://drive.google.com/file/d/19foQoygG6yyGKS8EOkeQvUnY1uCCmEB8/view?usp=sharing) & paste it's contents inside the **hollow_pact/content** folder of the cloned repositry
-3. Open the hollow_pact project folder inside Unreal Engine 5.5.4.
+| Steps | Details |
+|--------|---------|
+| **Source Code Access** | Clone the repository to your local machine |
+| **Required Assets** | Download **[Resources.zip](https://drive.google.com/file/d/19foQoygG6yyGKS8EOkeQvUnY1uCCmEB8/view?usp=sharing)** and paste its contents into `hollow_pact/Content` |
+| **Engine Version** | Open the `hollow_pact` project using **Unreal Engine 5.5.4** |
+| **Multiplayer Status** | Multiplayer gameplay is currently disabled due to known runtime issues; however, the entire codebase remains fully **network-replicated and authoritative** |
 
-
-
-_Note: Multiplayer mode is still buggy with few errors so i have disabled it, but the entire code is still fully network replicated_
 
 ## Table of Contents
 1. [Multiplayer Architecture](#1-multiplayer-architecture)
