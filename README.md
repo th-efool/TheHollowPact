@@ -41,8 +41,6 @@ To Play the Game Directly, you can run the executable from here:
 6. [Visuals and Audio System](#6-visuals-audio-system)
 7. [Prop Hunt Game Mode](#7-prop-hunt-game-mode)
 
----
-
 ## 1. Multiplayer Architecture
 ## Core Framework Components
 
