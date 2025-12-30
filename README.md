@@ -1,10 +1,22 @@
 # TheHollowPact
+TheHollowPact is a third-person shooter RPG built in Unreal Engine 5, centered around authoritative multiplayer architecture, replicated combat systems, and modular gameplay design.
+The project emphasizes scalable networking patterns (GameMode/GameState/PlayerState), client-side prediction, and clean separation of gameplay, UI, AI, and audio systems, while supporting both single-player and listen-server multiplayer workflows.
 
 **Engine:** `Unreal Engine 5.5.4`  
 **Mode:** `Multiplayer (Listen Server)`  
 **Genre:** `Third-Person Shooter RPG`  
 **Perspective:** `Over-the-shoulder third person`  
 **Target Platform:** `PC (with scalability for Console)`
+
+![Status](https://img.shields.io/badge/status-playable-success.svg)
+![Engine](https://img.shields.io/badge/engine-Unreal%20Engine%205-0E1128.svg)
+![UE Version](https://img.shields.io/badge/UE-5.5.4-informational.svg)
+![Mode](https://img.shields.io/badge/mode-multiplayer%20%7C%20listen%20server-blue.svg)
+![Networking](https://img.shields.io/badge/networking-authoritative%20replication-blueviolet.svg)
+![Genre](https://img.shields.io/badge/genre-TPS%20RPG-lightgrey.svg)
+![Perspective](https://img.shields.io/badge/perspective-over--the--shoulder-lightgrey.svg)
+![Platform](https://img.shields.io/badge/platform-PC-lightgrey.svg)
+![Architecture](https://img.shields.io/badge/architecture-modular%20systems-informational.svg)
 
 To Play the Game Directly, you can run the executable from here: 
 [🎮Game.exe](https://drive.google.com/file/d/1P3dZV_-bjo79fWiBQgCWrdzBUfkiG-GI/view?usp=sharing)
