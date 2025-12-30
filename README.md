@@ -30,8 +30,9 @@ To Play the Game Directly, you can run the executable from here:
 | **Engine Version** | Open the `hollow_pact` project using **Unreal Engine 5.5.4** |
 | **Multiplayer Status** | Multiplayer gameplay is currently disabled due to known runtime issues; however, the entire codebase remains fully **network-replicated and authoritative** |
 
+---
 
-## Table of Contents
+# Table of Contents
 1. [Multiplayer Architecture](#1-multiplayer-architecture)
 2. [Character System](#2-character-system)
 3. [Weapons & Combat](#3-weapons--combat)
