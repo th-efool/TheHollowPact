@@ -1,7 +1,4 @@
 # TheHollowPact
-TheHollowPact is a third-person shooter RPG built in Unreal Engine 5, centered around authoritative multiplayer architecture, replicated combat systems, and modular gameplay design.
-The project emphasizes scalable networking patterns (GameMode/GameState/PlayerState), client-side prediction, and clean separation of gameplay, UI, AI, and audio systems, while supporting both single-player and listen-server multiplayer workflows.
-
 ![Status](https://img.shields.io/badge/status-playable-success.svg)
 ![Engine](https://img.shields.io/badge/engine-Unreal%20Engine%205-0E1128.svg)
 ![UE Version](https://img.shields.io/badge/UE-5.5.4-informational.svg)
@@ -11,6 +8,9 @@ The project emphasizes scalable networking patterns (GameMode/GameState/PlayerSt
 ![Perspective](https://img.shields.io/badge/perspective-over--the--shoulder-lightgrey.svg)
 ![Platform](https://img.shields.io/badge/platform-PC-lightgrey.svg)
 ![Architecture](https://img.shields.io/badge/architecture-modular%20systems-informational.svg)
+
+TheHollowPact is a third-person shooter RPG built in Unreal Engine 5, centered around authoritative multiplayer architecture, replicated combat systems, and modular gameplay design.
+The project emphasizes scalable networking patterns (GameMode/GameState/PlayerState), client-side prediction, and clean separation of gameplay, UI, AI, and audio systems, while supporting both single-player and listen-server multiplayer workflows.
 
 ![](https://github.com/th-efool/TheHollowPact/blob/main/screenshot20251230091229.png)
 
